@@ -131,9 +131,9 @@ Argon One Fan and Button Service Daemon
 
 import smbus
 import RPi.GPIO as GPIO
-import os
 import time
 from threading import Thread
+from subprocess import run
 
 rev = GPIO.RPI_REVISION
 if rev == 2 or rev == 3:
@@ -156,11 +156,9 @@ def shutdown_check():
             time.sleep(0.01)
             pulsetime += 1
         if pulsetime >= 2 and pulsetime <= 3:
-            # TODO: Use subprocess instead of os.system
-            os.system("reboot")
+            run("reboot")
         elif pulsetime >= 4 and pulsetime <= 5:
-            # TODO: Use subprocess instead of os.system
-            os.system("shutdown now -h")
+            run("shutdown now -h")
 
 
 def get_fanspeed(tempval, configlist):
