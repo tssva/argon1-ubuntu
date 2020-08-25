@@ -86,3 +86,7 @@ To modify you fan curve edit `/etc/argononed.conf` and then execute
 - [ ] Replace use of `os.system()`.
 - [ ] Read `/sys/class/thermal/thermal_zone0/temp` in a Pythonic way.
 - [ ] Clean up parsing of the config file.
+
+## DONE
+
+- [x] Replace use of `os.system`.
