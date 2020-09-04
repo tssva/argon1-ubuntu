@@ -115,12 +115,12 @@ else:
 
 if len(sys.argv) > 1:
     if rev == 4:
-        bus.write_byte_data(0x1a,0,0)
+        bus.write_byte_data(0x1A, 0, 0)
     else:
         bus.write_byte(0x1a,0)
     if sys.argv[1] == "poweroff" or sys.argv[1] == "halt":
         try:
-            bus.write_byte_data(0x1a,0,0xFF)
+            bus.write_byte_data(0x1A, 0, 0xFF)
         except:
             rev = 0
 EOM
@@ -226,7 +226,7 @@ def temp_check():
     tmpconfig = load_config("/etc/argononed.conf")
     if len(tmpconfig) > 0:
         fanconfig = tmpconfig
-    address = 0x1a
+    address = 0x1A
     prevblock = 0
     while True:
         with open("/sys/class/thermal/thermal_zone0/temp", "r") as fp:
