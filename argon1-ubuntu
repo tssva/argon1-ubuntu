@@ -263,7 +263,7 @@ if [[ "$(id -u)" -ne 0 ]]; then
 fi
 
 if [[ "${HOSTTYPE}" != "arm" ]] && [[ "${HOSTTYPE}" != "aarch64" ]]; then
-  echo "[!] This script is only intended to run on ARM devices."
+  echo "[!] ERROR: This script is only intended to run on ARM devices."
   exit 1
 fi
 
@@ -274,14 +274,14 @@ fi
 if [[ "${PI_MODEL:-}" =~ ^Raspberry.Pi.*$ ]]; then
   echo "[+] Configuring your ${PI_MODEL}"
 else
-  echo "[!] This is not a Raspberry Pi. Quitting!"
+  echo "[!] ERROR: This is not a Raspberry Pi. Quitting!"
   exit 1
 fi
 
 # Check if we're running Ubuntu
 IS_UBUNTU=$(lsb_release -is)
 if [[ "${IS_UBUNTU}" != "Ubuntu" ]]; then
-  echo "[!] This script is only intended to run on Ubuntu."
+  echo "[!] ERROR: This script is only intended to run on Ubuntu."
   exit 1
 fi
 
