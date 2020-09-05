@@ -12,8 +12,10 @@ if [[ "${HOSTTYPE}" != "arm" ]] && [[ "${HOSTTYPE}" != "aarch64" ]]; then
 fi
 
 # Check if we're running on a Raspberry Pi
-PI_MODEL=$(grep ^Model /proc/cpuinfo  | cut -d':' -f2- | sed 's/ R/R/')
-if [[ "${PI_MODEL}" == *"Raspberry Pi"* ]]; then
+if [[ -e /proc/device-tree/model ]]; then
+  read -r -d $'\0' PI_MODEL </proc/device-tree/model
+fi
+if [[ "${PI_MODEL:-}" =~ ^Raspberry.Pi.*$ ]]; then
   echo "[+] Configuring your ${PI_MODEL}"
 else
   echo "[!] This is not a Raspberry Pi. Quitting!"
