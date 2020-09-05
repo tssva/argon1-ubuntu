@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 # Display help usage
-function usage () {
-  echo
-  echo "Usage"
-  echo "  $0 [options]"
-  echo
-  echo "Available options are"
-  echo "  --config      Get help about how to configure the fan"
-  echo "  --install     Install the Argon ONE Case Fan / Argon FanHAT driver"
-  echo "  --uninstall   Uninstall the Argon ONE Case Fan / Argon FanHAT driver"
-  echo
+function usage() {
+    echo
+    echo "Usage"
+    echo "  $0 [options]"
+    echo
+    echo "Available options are"
+    echo "  --config      Get help about how to configure the fan"
+    echo "  --install     Install the Argon ONE Case Fan / Argon FanHAT driver"
+    echo "  --uninstall   Uninstall the Argon ONE Case Fan / Argon FanHAT driver"
+    echo
 }
 
 function config_argonone() {
@@ -27,7 +27,7 @@ function install_argonone() {
 
     if [[ ! -f "${daemonconfigfile}" ]]; then
         # Generate config file for fan speed
-        cat <<'EOM' > "${daemonconfigfile}"
+        cat <<'EOM' >"${daemonconfigfile}"
 #
 # Argon One Fan Configuration
 #
@@ -55,7 +55,7 @@ EOM
     fi
 
     # Generate script that runs every shutdown event
-    cat <<'EOM' > "${shutdownscript}"
+    cat <<'EOM' >"${shutdownscript}"
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -*- mode: Python; tab-width: 4; indent-tabs-mode: nil; -*-
@@ -92,8 +92,8 @@ if len(sys.argv) > 1:
 EOM
     chmod 755 "${shutdownscript}"
 
-# Generate script to monitor shutdown button
-    cat <<'EOM' > "${powerbuttonscript}"
+    # Generate script to monitor shutdown button
+    cat <<'EOM' >"${powerbuttonscript}"
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -*- mode: Python; tab-width: 4; indent-tabs-mode: nil; -*-
@@ -226,7 +226,7 @@ EOM
         systemctl stop ${daemonname}.service
     fi
 
-    cat <<"EOM" > "${daemonfanservice}"
+    cat <<"EOM" >"${daemonfanservice}"
 [Unit]
 Description=Argon One Fan and Button Service
 After=multi-user.target
@@ -258,31 +258,31 @@ function uninstall_argonone() {
 
 # Check if the user running the script is root
 if [[ "$(id -u)" -ne 0 ]]; then
-  echo "[!] ERROR: You need to be root."
-  exit 1
+    echo "[!] ERROR: You need to be root."
+    exit 1
 fi
 
 if [[ "${HOSTTYPE}" != "arm" ]] && [[ "${HOSTTYPE}" != "aarch64" ]]; then
-  echo "[!] ERROR: This script is only intended to run on ARM devices."
-  exit 1
+    echo "[!] ERROR: This script is only intended to run on ARM devices."
+    exit 1
 fi
 
 # Check if we're running on a Raspberry Pi
 if [[ -e /proc/device-tree/model ]]; then
-  read -r -d $'\0' PI_MODEL </proc/device-tree/model
+    read -r -d $'\0' PI_MODEL </proc/device-tree/model
 fi
 if [[ "${PI_MODEL:-}" =~ ^Raspberry.Pi.*$ ]]; then
-  echo "[+] Configuring your ${PI_MODEL}"
+    echo "[+] Configuring your ${PI_MODEL}"
 else
-  echo "[!] ERROR: This is not a Raspberry Pi. Quitting!"
-  exit 1
+    echo "[!] ERROR: This is not a Raspberry Pi. Quitting!"
+    exit 1
 fi
 
 # Check if we're running Ubuntu
 IS_UBUNTU=$(lsb_release -is)
 if [[ "${IS_UBUNTU}" != "Ubuntu" ]]; then
-  echo "[!] ERROR: This script is only intended to run on Ubuntu."
-  exit 1
+    echo "[!] ERROR: This script is only intended to run on Ubuntu."
+    exit 1
 fi
 
 daemonname="argononed"
@@ -298,25 +298,30 @@ if [[ $# -lt 1 ]]; then
 else
     while [[ $# -gt 0 ]]; do
         case "${1}" in
-            -config|--config)
-            shift
-            config_argonone
-            exit 0;;
-            -install|--install)
-            shift
-            install_argonone
-            exit 0;;
-            -uninstall|--uninstall)
-            shift
-            uninstall_argonone
-            exit 0;;
-            -h|--h|-help|--help)
-            usage
-            exit 0;;
+            -config | --config)
+                shift
+                config_argonone
+                exit 0
+                ;;
+            -install | --install)
+                shift
+                install_argonone
+                exit 0
+                ;;
+            -uninstall | --uninstall)
+                shift
+                uninstall_argonone
+                exit 0
+                ;;
+            -h | --h | -help | --help)
+                usage
+                exit 0
+                ;;
             *)
-            echo "[!] ERROR: \"${1}\" is not a supported parameter."
-            usage
-            exit 1;;
+                echo "[!] ERROR: \"${1}\" is not a supported parameter."
+                usage
+                exit 1
+                ;;
         esac
     done
 fi
