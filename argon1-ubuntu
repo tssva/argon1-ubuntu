@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # Check if the user running the script is root
-if [ "$(id -u)" -ne 0 ]; then
+if [[ "$(id -u)" -ne 0 ]]; then
   echo "[!] ERROR: You need to be root."
   exit 1
 fi
 
 HOST_ARCH=$(uname -m)
-if [ "${HOST_ARCH}" != "armv7l" ] && [ "${HOST_ARCH}" != "aarch64" ]; then
+if [[ "${HOST_ARCH}" != "armv7l" ]] && [[ "${HOST_ARCH}" != "aarch64" ]]; then
   echo "[!] This script is only intended to run on ARM devices."
   exit 1
 fi
@@ -23,7 +23,7 @@ fi
 
 # Check if we're running Ubuntu
 IS_UBUNTU=$(lsb_release -is)
-if [ "${IS_UBUNTU}" != "Ubuntu" ]; then
+if [[ "${IS_UBUNTU}" != "Ubuntu" ]]; then
   echo "[!] This script is only intended to run on Ubuntu."
   exit 1
 fi
@@ -59,7 +59,7 @@ function config_argonone() {
 function install_argonone() {
     apt install -y python3-rpi.gpio python3-smbus i2c-tools
 
-    if [ ! -f "${daemonconfigfile}" ]; then
+    if [[ ! -f "${daemonconfigfile}" ]]; then
         # Generate config file for fan speed
         cat <<'EOM' > "${daemonconfigfile}"
 #
@@ -256,7 +256,7 @@ EOM
     chmod 755 "${powerbuttonscript}"
 
     # Stop the service if it is already present.
-    if [ -f "${daemonfanservice}" ]; then
+    if [[ -f "${daemonfanservice}" ]]; then
         systemctl stop ${daemonname}.service
     fi
 
@@ -291,11 +291,11 @@ function uninstall_argonone() {
 }
 
 # Take command line arguments
-if [ $# -lt 1 ]; then
+if [[ $# -lt 1 ]]; then
     usage
     exit 0
 else
-    while [ $# -gt 0 ]; do
+    while [[ $# -gt 0 ]]; do
         case "${1}" in
             -config|--config)
             shift
