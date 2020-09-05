@@ -14,7 +14,7 @@ function usage () {
 }
 
 function config_argonone() {
-    echo "Here is to current Argon fan configuration:"
+    echo "Here is the current Argon fan configuration:"
     echo
     cat "${daemonconfigfile}"
     echo
