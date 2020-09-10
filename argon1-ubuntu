@@ -14,9 +14,16 @@ EOM
 }
 
 function config_argonone() {
-    echo "Here is the current Argon fan configuration:"
-    echo
-    cat "${daemonconfigfile}"
+    if [[ -f "${daemonconfigfile}" ]]; then
+      echo "Current Argon fan configuration:"
+      echo
+      cat "${daemonconfigfile}"
+    else
+      echo "${daemonconfigfile} not present. Default settings will be used."
+      echo "55=10"
+      echo "60=55"
+      echo "65=100"
+    fi
     echo
     echo "Edit ${daemonconfigfile} to change your fan curve and then run"
     echo "sudo 'systemctl restart argononed.service' to activate the changes."
