@@ -242,11 +242,11 @@ EOM
 }
 
 function uninstall_argonone() {
-    rm ${powerbuttonscript}
-    rm ${shutdownscript}
+    rm -f ${powerbuttonscript}
+    rm -f ${shutdownscript}
     systemctl stop ${daemonname}.service
     systemctl disable ${daemonname}.service
-    rm ${daemonfanservice}
+    rm -f ${daemonfanservice}
     systemctl daemon-reload
     echo "Removed Argon One Services."
     echo "Cleanup will complete after restarting the device."
