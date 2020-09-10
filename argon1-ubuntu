@@ -260,10 +260,8 @@ fi
 if [[ -e /proc/device-tree/model ]]; then
     read -r -d $'\0' PI_MODEL </proc/device-tree/model
 fi
-if [[ "${PI_MODEL:-}" =~ ^Raspberry.Pi.*$ ]]; then
-    echo "[+] Configuring your ${PI_MODEL}"
-else
-    echo "[!] ERROR: This is not a Raspberry Pi. Quitting!"
+if [[ ! "${PI_MODEL:-}" =~ ^Raspberry.Pi.*$ ]]; then
+    echo "[!] ERROR: This is not a Raspberry Pi."
     exit 1
 fi
 
