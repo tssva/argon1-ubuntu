@@ -285,22 +285,22 @@ if [[ $# -lt 1 ]]; then
 else
     while [[ $# -gt 0 ]]; do
         case "${1}" in
-            -config | --config)
+            -c | --config)
                 shift
                 config_argonone
                 exit 0
                 ;;
-            -install | --install)
+            -i | --install)
                 shift
                 install_argonone
                 exit 0
                 ;;
-            -uninstall | --uninstall)
+            -u | --uninstall)
                 shift
                 uninstall_argonone
                 exit 0
                 ;;
-            -h | --h | -help | --help)
+            -h | --help)
                 usage
                 exit 0
                 ;;
