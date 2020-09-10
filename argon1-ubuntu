@@ -2,15 +2,15 @@
 
 # Display help usage
 function usage() {
-    echo
-    echo "Usage"
-    echo "  $0 [options]"
-    echo
-    echo "Available options are"
-    echo "  --config      Get help about how to configure the fan"
-    echo "  --install     Install the Argon ONE Case Fan / Argon FanHAT driver"
-    echo "  --uninstall   Uninstall the Argon ONE Case Fan / Argon FanHAT driver"
-    echo
+cat <<EOM
+Usage: ${0} [OPTION]
+
+Options:
+  -c, --config      Display current fan configuration
+  -i, --install     Install the Argon ONE Case Fan / Argon FanHAT driver
+  -u, --uninstall   Uninstall the Argon ONE Case Fan / Argon FanHAT driver
+  -h, --help        Display this usage information
+EOM
 }
 
 function config_argonone() {
